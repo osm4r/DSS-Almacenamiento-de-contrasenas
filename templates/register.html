@@ -3,23 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register</title>
 </head>
 <body>
-    {% extends 'base.html' %}
-
-    {% block header %}
-    <h1>{% block title %}Register{% endblock %}</h1>
-    {% endblock %}
-
-    {% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Register">
+    <h1>Register</h1>
+    <form method="post" action="{{ url_for('register') }}" onsubmit="return validateForm()">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <span id="passwordError" style="color: red;"></span>
+        <br>
+        <button type="submit">Register</button>
     </form>
-    {% endblock %}
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+
+    <script>
+        function validateForm() {
+            // Obtener el valor del campo de contraseña
+            var password = document.getElementById("password").value;
+            
+            // Aplicar la política de contraseñas
+            if (password.length < 8) {
+                document.getElementById("passwordError").innerText = "La contraseña debe tener al menos 8 caracteres.";
+                return false;
+            }
+
+            if (!/[a-z]/.test(password)) {
+                document.getElementById("passwordError").innerText = "La contraseña debe contener al menos una letra minúscula.";
+                return false;
+            }
+
+            if (!/[A-Z]/.test(password)) {
+                document.getElementById("passwordError").innerText = "La contraseña debe contener al menos una letra mayúscula.";
+                return false;
+            }
+
+            if (!/\d/.test(password)) {
+                document.getElementById("passwordError").innerText = "La contraseña debe contener al menos un número.";
+                return false;
+            }
+
+            // Si la contraseña pasa todas las verificaciones, borrar el mensaje de error
+            document.getElementById("passwordError").innerText = "";
+            return true;
+        }
+    </script>
 </body>
 </html>

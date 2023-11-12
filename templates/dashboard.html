@@ -6,6 +6,9 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <p>ENTRASTE A TU APP</p>
+    <h1>Welcome to the Dashboard, {{ username }}</h1>
+    <form action="{{ url_for('index') }}" method="get">
+        <button type="submit">Logout</button>
+    </form>
 </body>
 </html>

@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
-    {% extends 'base.html' %}
+    <h1>Login</h1>
 
-    {% block header %}
-    <h1>{% block title %}Log In{% endblock %}</h1>
-    {% endblock %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="error-message">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
 
-    {% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Log In">
+    <form method="post" action="{{ url_for('login') }}">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
     </form>
-    {% endblock %}
+    <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
 </body>
 </html>
